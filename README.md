@@ -114,3 +114,4 @@ This app embeds several CAPS principles:
 
 Created for Grade 11 Mathematics (CAPS Curriculum)
 Optimised for classroom and self-study use
+
