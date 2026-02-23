@@ -2,6 +2,17 @@ import streamlit as st
 from typing import List, Tuple, Dict, Any
 import math
 
+# Configure page metadata for social sharing and browser display
+st.set_page_config(
+    page_title="Quadratic Sequence Tutor | CAPS Grade 11",
+    page_icon="📐",
+    layout="wide",
+    initial_sidebar_state="expanded",
+    menu_items={
+        "About": "Quadratic Sequence Tutor - CAPS Grade 11 Mathematics\nBuilt with Streamlit for educational use."
+    }
+)
+
 
 def compute_quadratic_from_terms(seq: List[float]) -> Tuple[float, float, float, Dict[str, Any]]:
     """
