@@ -19,6 +19,7 @@ When you share this link on social media, it shows:
 ## Copy your share link:
 """)
 
-st.code("https://your-streamlit-url.streamlit.app", language="text")
+
+st.code("https://autotutor.streamlit.app", language="text")
 
 st.info("Tip: Paste this URL on WhatsApp, Facebook, or Twitter for a rich preview!")
