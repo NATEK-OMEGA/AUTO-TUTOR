@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(
     page_title="Home - Quadratic Sequence Tutor",
-    page_icon="🏠",
+    page_icon="Autotutor.png",
     layout="wide"
 )
 
