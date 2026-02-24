@@ -3,7 +3,7 @@ import streamlit as st
 # Configure the main app with rich metadata
 st.set_page_config(
     page_title="Quadratic Sequence Tutor | CAPS Grade 11",
-    page_icon="📐",
+    page_icon="Autotutor.png",
     layout="wide",
     initial_sidebar_state="expanded"
 )
