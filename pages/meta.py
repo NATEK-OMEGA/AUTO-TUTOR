@@ -4,7 +4,7 @@ Helps with OpenGraph when sharing Streamlit links
 """
 import streamlit as st
 
-st.set_page_config(page_title="Quadratic Sequence Tutor", page_icon="📐")
+st.set_page_config(page_title="Quadratic Sequence Tutor", page_icon="Autotutor.png")
 
 st.markdown("""
 # Share this app!
