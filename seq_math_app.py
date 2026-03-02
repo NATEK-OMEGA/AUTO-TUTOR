@@ -1,15 +1,18 @@
 import streamlit as st
-from typing import List, Tuple, Dict, Any
+from typing import List, Dict, Any, Tuple
 import math
+
+# import topic modules
+from topics import grade10, grade11, grade12, quadratic
 
 # Configure page metadata for social sharing and browser display
 st.set_page_config(
-    page_title="Quadratic Sequence Tutor | CAPS Grade 11",
+    page_title="AUTO-Tutor | CAPS Mathematics",
     page_icon="Autotutor.png",
     layout="wide",
     initial_sidebar_state="expanded",
     menu_items={
-        "About": "Quadratic Sequence Tutor - CAPS Grade 11 Mathematics\nBuilt with Streamlit for educational use."
+        "About": "AUTO-Tutor – a unified South African CAPS Mathematics learning tool for Grades 10–12 built with Streamlit."
     }
 )
 
@@ -394,74 +397,191 @@ def display_steps(details: Dict[str, Any], a: float, b: float, c: float,
             st.write(details.get("step_texts", {}).get("teacher_note_verification", ""))
 
 
+# ---------------------------------------------------------------------------
+# curriculum structure definitions (grade → list of topics)
+# ---------------------------------------------------------------------------
+
+TOPICS_BY_GRADE: Dict[str, List[str]] = {
+    "Grade 10": [
+        "Numbers & Patterns",
+        "Algebra: Expressions & Equations",
+        "Finance Mathematics",
+        "Measurement & Geometry",
+        "Trigonometry",
+        "Probability & Statistics",
+    ],
+    "Grade 11": [
+        "Linear Functions & Graphs",
+        "Quadratic Functions & Sequences",
+        "Exponential & Logarithmic Functions",
+        "Trigonometry",
+        "Euclidean Geometry",
+        "Probability & Statistics",
+    ],
+    "Grade 12": [
+        "Calculus: Differentiation",
+        "Calculus: Integration",
+        "Trigonometric Functions & Identities",
+        "Analytic Geometry",
+        "Probability & Statistics",
+        "Finance Mathematics",
+    ],
+}
+
+# handler map filled at bottom
+TOPIC_HANDLERS: Dict[str, Dict[str, Any]] = {}
+
+
+
+
+def teach_linear_functions(show_teacher_notes: bool, show_quizzes: bool) -> None:
+    st.subheader("Linear Functions & Graphs")
+    st.write("Explore linear equations of the form y = mx + c and plot them.")
+    m = st.number_input("Slope m", value=1.0)
+    c = st.number_input("Intercept c", value=0.0)
+    x = st.slider("x value", -10.0, 10.0, 1.0)
+    y = m * x + c
+    st.write(f"At x={x}, y={y}")
+    # quick plot
+    xs = list(range(-10,11))
+    ys = [m*xi + c for xi in xs]
+    # simple line plot of y values; x-axis will be the index by default
+    st.line_chart(ys)
+
+
+def teach_exponential_functions(show_teacher_notes: bool, show_quizzes: bool) -> None:
+    st.subheader("Exponential & Logarithmic Functions")
+    st.write("Evaluate expressions like y = ab^x. (Logarithms explanation coming soon.)")
+    a = st.number_input("Coefficient a", value=1.0)
+    b = st.number_input("Base b", value=2.0)
+    x = st.number_input("Exponent x", value=1.0)
+    st.write(f"y = {a} * {b}^{x} = {a * (b**x):.4f}")
+
+
+def teach_euclidean_geometry(show_teacher_notes: bool, show_quizzes: bool) -> None:
+    st.subheader("Euclidean Geometry")
+    st.write("Basic constructions and proofs involving lines, angles and circles. "
+             "(Content to be expanded.)")
+
+
+def teach_calculus_differentiation(show_teacher_notes: bool, show_quizzes: bool) -> None:
+    st.subheader("Calculus: Differentiation")
+    st.write("Use the power rule to differentiate a polynomial ax^n.")
+    coeffs = st.text_input("Enter coefficients from highest power down (comma-separated)", "1,0,0")
+    if st.button("Differentiate"):
+        try:
+            nums = [float(c) for c in coeffs.split(",") if c.strip()]
+            deriv = []
+            power = len(nums) - 1
+            for idx, a in enumerate(nums):
+                deriv.append(a * power)
+                power -= 1
+            st.write("Derivative coefficients (highest to lowest):", deriv)
+        except Exception:
+            st.error("Please enter valid numbers.")
+
+
+def teach_calculus_integration(show_teacher_notes: bool, show_quizzes: bool) -> None:
+    st.subheader("Calculus: Integration")
+    st.write("Compute an antiderivative of a polynomial ax^n.")
+    coeffs = st.text_input("Enter coefficients from highest power down (comma-separated)", "1,0,0")
+    if st.button("Integrate"):
+        try:
+            nums = [float(c) for c in coeffs.split(",") if c.strip()]
+            integ = []
+            power = len(nums) - 1
+            for idx, a in enumerate(nums):
+                integ.append(a / (power + 1))
+                power -= 1
+            st.write("Integral coefficients (highest to lowest), + C:", integ)
+        except Exception:
+            st.error("Please enter valid numbers.")
+
+
+def teach_trig_identities(show_teacher_notes: bool, show_quizzes: bool) -> None:
+    st.subheader("Trigonometric Functions & Identities")
+    st.write("Verify simple identities such as sin^2 x + cos^2 x = 1.")
+    angle = st.slider("Angle (degrees)", 0, 360, 30, key="id_angle")
+    rad = math.radians(angle)
+    st.write(f"sin^2({angle}) + cos^2({angle}) = {math.sin(rad)**2 + math.cos(rad)**2:.5f}")
+
+
+def teach_analytic_geometry(show_teacher_notes: bool, show_quizzes: bool) -> None:
+    st.subheader("Analytic Geometry")
+    st.write("Investigate equations of circles and conic sections in the coordinate plane.")
+
+
+
+
+# ---------------------------------------------------------------------------
+
+
 
 def main() -> None:
-    st.title("Quadratic Sequence Tutor")
-    st.write("Enter the first terms of a quadratic sequence (at least 3 terms). The app will find the general term T(n)=an^2+bn+c and show step-by-step reasoning.")
+    st.title("AUTO‑Tutor: CAPS Mathematics (Grades 10–12)")
+    st.write(
+        "Use the controls below to choose a grade and topic. You can switch between "
+        "**Student** and **Teacher** mode; teacher mode enables extra notes and quizzes."
+    )
 
     # Mode selection
     mode = st.radio("Select mode:", ["Student (solve)", "Teacher (with notes & quizzes)"], index=0)
     show_quizzes = mode == "Teacher (with notes & quizzes)"
     show_teacher_notes = mode == "Teacher (with notes & quizzes)"
 
-    seq_input = st.text_input("Sequence terms (comma-separated, e.g. 3, 8, 15, 24)", value="1,4,9,16")
-    show_steps = st.checkbox("Show detailed steps", value=True)
-    compute_button = st.button("Compute general term")
+    # Grade / topic selection
+    grades = list(TOPICS_BY_GRADE.keys())
+    grade = st.selectbox("Choose grade:", grades)
+    topics = TOPICS_BY_GRADE[grade]
+    topic = st.selectbox("Choose topic:", topics)
 
-    def compute_and_display_from_list(seq: List[float]):
-        try:
-            a, b, c, details = compute_quadratic_from_terms(seq)
-        except ValueError as e:
-            st.error(f"Error: {e}")
-            return
+    # dispatch to the appropriate topic handler
+    handler = TOPIC_HANDLERS.get(grade, {}).get(topic)
+    if handler:
+        handler(show_teacher_notes=show_teacher_notes, show_quizzes=show_quizzes)
+    else:
+        st.warning(f"No module implemented yet for {topic} (Grade {grade[-2:]}). Stay tuned!")
 
-        if show_steps:
-            st.subheader("Step-by-step explanation")
-            display_steps(details, a, b, c, show_teacher_notes=show_teacher_notes, show_quizzes=show_quizzes)
 
-        st.subheader("Result")
-        st.latex(r"T(n) = %s" % latex_polynomial_elegant(a, b, c))
-        st.write(f"Computed coefficients: a = {format_num_for_display(a)}, b = {format_num_for_display(b)}, c = {format_num_for_display(c)}")
+# ---------------------------------------------------------
+# topic-specific teaching modules (each function should
+# render its own interface and explanations)
+# ---------------------------------------------------------
 
-        # allow user to compute further terms or specific nth term
-        st.subheader("Explore")
-        n = st.number_input("Compute T(n) for n =", min_value=1, value=len(seq) + 1, step=1)
-        Tn = a * (n ** 2) + b * n + c
-        st.write(f"T({n}) = {format_num_for_display(Tn)}")
+# quadratic sequence module relocated to topics/quadratic
 
-        count = st.number_input("Generate next how many terms?", min_value=0, value=3, step=1)
-        if count > 0:
-            start = len(seq) + 1
-            more = [a * (i ** 2) + b * i + c for i in range(start, start + count)]
-            st.write("Next terms:", [format_num_for_display(x) for x in more])
+def quadratic_sequence_module(show_teacher_notes: bool, show_quizzes: bool):
+    quadratic.quadratic_sequence_module(show_teacher_notes, show_quizzes)
 
-    if compute_button:
-        # parse input
-        try:
-            seq = [float(x.strip()) for x in seq_input.split(",") if x.strip() != ""]
-            if len(seq) < 3:
-                st.error("Please enter at least 3 terms.")
-            else:
-                compute_and_display_from_list(seq)
-        except ValueError as e:
-            st.error(f"Error parsing input: {e}")
 
-    # Examples section
-    with st.expander("Examples & Practice"):
-        st.write("Choose an example sequence to load a worked example:")
-        examples = {
-            "Squares (1,4,9,16)": [1, 4, 9, 16],
-            "Starts at 3 (3,8,15,24)": [3, 8, 15, 24],
-            "Shifted (2,7,14,23)": [2, 7, 14, 23],
-        }
-        choice = st.selectbox("Select example:", list(examples.keys()))
-        if st.button("Load example"):
-            ex_seq = examples[choice]
-            seq_input = ",".join(format_num_for_display(x) for x in ex_seq)
-            # show what was loaded and compute
-            st.write("Loaded sequence:", seq_input)
-            compute_and_display_from_list(ex_seq)
 
+# dispatch map using handlers imported from topic modules
+TOPIC_HANDLERS = {
+    "Grade 10": {
+        "Numbers & Patterns": grade10.teach_numbers_patterns,
+        "Algebra: Expressions & Equations": grade10.teach_algebra_expressions,
+        "Finance Mathematics": grade10.teach_finance,
+        "Measurement & Geometry": grade10.teach_measurement_geometry,
+        "Trigonometry": grade10.teach_trigonometry,
+        "Probability & Statistics": grade10.teach_probability_statistics,
+    },
+    "Grade 11": {
+        "Linear Functions & Graphs": grade11.teach_linear_functions,
+        "Quadratic Functions & Sequences": grade11.teach_quadratic_sequences,
+        "Exponential & Logarithmic Functions": grade11.teach_exponential_functions,
+        "Trigonometry": grade10.teach_trigonometry,
+        "Euclidean Geometry": grade11.teach_euclidean_geometry,
+        "Probability & Statistics": grade10.teach_probability_statistics,
+    },
+    "Grade 12": {
+        "Calculus: Differentiation": grade12.teach_calculus_differentiation,
+        "Calculus: Integration": grade12.teach_calculus_integration,
+        "Trigonometric Functions & Identities": grade12.teach_trig_identities,
+        "Analytic Geometry": grade12.teach_analytic_geometry,
+        "Probability & Statistics": grade12.teach_probability_statistics,
+        "Finance Mathematics": grade12.teach_finance,
+    },
+}
 
 if __name__ == "__main__":
     main()

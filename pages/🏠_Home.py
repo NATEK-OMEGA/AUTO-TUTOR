@@ -1,21 +1,21 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="Home - Quadratic Sequence Tutor",
+    page_title="Home - AUTO-Tutor",
     page_icon="Autotutor.png",
     layout="wide"
 )
 
 st.markdown("""
-# 📐 Quadratic Sequence Tutor
+# 📐 AUTO-Tutor
 
-### CAPS Grade 11 Mathematics
+### CAPS Grade 10–12 Mathematics
 
 ---
 
 ## Welcome! 👋
 
-This interactive app helps you learn and teach **quadratic sequences** using the proven CAPS curriculum method.
+This interactive app helps you learn and teach **many topics from the CAPS mathematics curriculum** using interactive tools and step-by-step reasoning.
 
 """)
 
@@ -24,19 +24,18 @@ col1, col2 = st.columns(2)
 with col1:
     st.subheader("✨ For Students")
     st.write("""
-    - **Learn step-by-step** how to find the general term
-    - See **detailed explanations** alongside calculations
-    - Practice with **built-in examples**
-    - Try **interactive quizzes** to test your understanding
+    - **Learn step-by-step** with CAPS‑aligned explanations across grades 10–12
+    - Practice using interactive calculators and visualisations
+    - Work through example problems and self‑assess with quizzes
     """)
 
 with col2:
     st.subheader("👨‍🏫 For Teachers")
     st.write("""
-    - Access **teacher notes** with deep pedagogy
-    - Use **mark-allocated quizzes** (9.5 total marks)
-    - Show working to students with **full transparency**
-    - Demonstrate the CAPS method clearly
+    - Access **teacher notes** and curriculum references across all topics
+    - Use **mark-allocated quizzes** for formative assessment
+    - Show full working with clear mathematical language
+    - Support learners from Grade 10 through 12
     """)
 
 st.divider()
@@ -47,11 +46,11 @@ tab1, tab2, tab3 = st.tabs(["Quick Start", "Features", "About"])
 
 with tab1:
     st.write("""
-    1. Go to the **"Tutor"** page (left sidebar or click below)
+    1. Go to the **"Tutor"** page (use the sidebar or the buttons below)
     2. Choose your mode: **Student** or **Teacher**
-    3. Enter a sequence (e.g., `1, 4, 9, 16`)
-    4. Click **Compute general term**
-    5. Follow the step-by-step solution!
+    3. Select a grade and a topic from the dropdowns
+    4. Enter the requested values or expressions
+    5. Follow the step-by-step explanations and try the quizzes!
     """)
     st.info("💡 **Tip:** Try the examples first to see how it works!")
 
@@ -65,9 +64,9 @@ with tab2:
     - Verification of answers
     
     ✅ **CAPS Alignment**
-    - Follows Grade 11 curriculum exactly
-    - Uses the difference method
-    - Teaches system solving
+    - Covers topics from Grades 10–12
+    - Explanations and examples correspond to CAPS outcomes
+    - Builds algebraic and geometric reasoning
     
     ✅ **Interactive Learning**
     - Student and Teacher modes
@@ -85,7 +84,7 @@ with tab3:
     st.write("""
     ### About This App
     
-    Created for **Grade 11 Mathematics** education in South Africa (CAPS Curriculum)
+    Created as an educational tool for South African CAPS Mathematics (Grades 10–12)
     
     **Features:**
     - Streamlit-based web app
@@ -127,4 +126,4 @@ with col2:
 
 st.divider()
 
-st.caption("📚 Quadratic Sequence Tutor | CAPS Grade 11 | Made with ❤️ for learners and educators")
+st.caption("📚 AUTO-Tutor | CAPS Mathematics Grades 10–12 | Made with ❤️ for learners and educators")

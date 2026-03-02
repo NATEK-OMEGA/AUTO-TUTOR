@@ -1,35 +1,28 @@
-# Quadratic Sequence Tutor
+# AUTO‑Tutor: CAPS Mathematics
 
-A comprehensive Streamlit web app for teaching and learning quadratic sequences using the CAPS Grade 11 curriculum methodology.
+A Streamlit web app covering the full Grade 10–12 South African CAPS mathematics curriculum.  
+Originally built as a quadratic sequence tutor, the application has been extended into a general-purpose maths learning tool. Users select a grade and topic, then work through interactive examples and step-by-step explanations.
 
 ## Features
 
 ### 1. **Student Mode**
-- Input any quadratic sequence (minimum 3 terms)
-- Step-by-step solution with classroom explanations
-- Left: Algebraic calculations with superscripts
-- Right: Plain-language CAPS-aligned explanations
-- Real-world verification and term generation
-- Interactive examples with practice sequences
+- Choose a grade (10, 11 or 12) and a topic from the CAPS curriculum
+- Enter values or expressions as prompted by the topic module
+- View step-by-step solutions, calculations, interactive charts and diagrams
+- Quizzes with self‑marking and optional teacher commentary help assess comprehension
+- Modular design makes it easy to extend and refactor topics
 
 ### 2. **Teacher Mode** (with notes & quizzes)
-- **Detailed Pedagogy:** Teacher notes for each calculation step
-  - Why second difference = 2a?
-  - How elimination method works?
-  - Why verification matters?
-- **Interactive Quizzes:** Mark-allocated questions (9.5 total marks)
-  - Students try before revealing answers
-  - Self-marking approach
-  - Step-by-step learning progression
+- Enable expanded pedagogy across all topics
+  - Mathematics reasoning linked to CAPS outcomes
+  - Optional hints, teacher commentary and worked examples
+- **Interactive Quizzes:** built into each topic where appropriate
+  - Questions are mark‑allocated and self‑assessed
+  - Teachers can toggle visibility of answers for formative assessment
 
 ### 3. **Mathematical Etiquette**
-- **Result Display:** Clean polynomial formatting
-  - Omits coefficient 1: `n²` instead of `1n²`
-  - Omits coefficient -1: `-n` instead of `-1n`
-  - Drops zero terms: `n² + 3` not `n² + 0n + 3`
-- **Calculation Steps:** Full values shown for transparency
-  - Students see every working step
-  - No hidden arithmetic
+- Clean formatting and explanation tailored to each topic
+- Calculations are fully shown with intermediate steps, supporting CAPS expectations for rigour
 
 ### 4. **CAPS Alignment**
 - Follows the Grade 11 CAPS curriculum method:
@@ -54,7 +47,8 @@ pip install -r requirements.txt
 streamlit run seq_math_app.py
 ```
 
-The app opens in your browser at `http://localhost:8501`
+The app opens in your browser at `http://localhost:8501`.  
+Select a grade and topic from the drop‑down menus, then follow the on‑screen instructions for that topic.
 
 ### Student Workflow
 1. Select **"Student (solve)"** mode
@@ -108,10 +102,75 @@ This app embeds several CAPS principles:
 
 - Python 3.8+
 - Streamlit
-- (No other dependencies)
+- NumPy and Matplotlib (for charts/graphics)
 
 ## Author Notes
 
-Created for Grade 11 Mathematics (CAPS Curriculum)
-Optimised for classroom and self-study use
+Created as an educational tool for South African CAPS Mathematics (Grades 10–12).  
+Optimised for classroom and self-study use.
+
+
+## Version 2.1 update
+
+This release transforms the original Grade 11 quadratic sequence tutor into a
+full‑fledged CAPS mathematics learning platform. Key changes include:
+
+- **Modular architecture:** topic handlers moved into `topics/` package with
+  separate modules for grade‑10, grade‑11, grade‑12 and shared quadratic logic.
+- **Grade/topic selectors:** users now pick Grade 10, 11 or 12 and then a topic
+  from the curriculum list rather than only quadratic sequences.
+- **Expanded topics:** dozens of new interactive modules added across grades,
+  including algebra, finance, measurement, trigonometry, probability,
+  linear/exponential functions, calculus, analytic and Euclidean geometry.
+- **Teacher notes & quizzes:** every topic contains pedagogy expanders and
+  built‑in self‑marking quiz questions with mark allocations.
+- **Graphics:** Matplotlib charts support unit circle diagrams, linear plots,
+  angle supplements, circle equations, etc. Dependencies added (`numpy`,
+  `matplotlib`).
+- **Refactor & cleanup:** original quadratic code relocated to its own module;
+  page wrappers simplified; home page rewritten; README enhanced with new
+  usage instructions.
+- **Type safety & testing:** Pylance errors cleared, type hints improved,
+  example import tests added to verify handler registrations.
+
+This update lays the groundwork for further curriculum coverage and makes the
+codebase easier to maintain and extend.
+
+## Version 2.2 Update: Step-by-Step Pedagogical Explanations
+
+This release enhances all 18+ topic handlers across Grades 10–12 with **comprehensive step-by-step calculations and explanations**, mirroring the detailed pedagogical approach used in the original quadratic sequence tutor.
+
+### Enhancements by Grade
+
+#### Grade 10 (6 handlers)
+- **Numbers & Patterns**: First-differences calculation step-by-step with each subtraction labelled
+- **Algebra: Expressions & Equations**: Balance method broken into STEP 1 (subtract), STEP 2 (divide), STEP 3 (verify)
+- **Finance Mathematics**: Simple & Compound Interest split into 5-step workflows with formula display
+- **Measurement & Geometry**: Area/perimeter formulas with step-by-step application (rectangles, circles, triangles)
+- **Trigonometry**: SOH-CAH-TOA ratios with unit circle diagrams; STEP 1–3 walkthrough
+- **Probability & Statistics**: Mean/median/mode with sorted data and intermediate steps
+
+#### Grade 11 (5 handlers)
+- **Linear Functions**: Gradient-intercept breakdown; x/y-intercept calculation; graphing
+- **Quadratic Sequences**: Delegates to comprehensive quadratic module (500+ lines of pedagogy)
+- **Exponential Functions**: Exponential vs linear growth comparison; graph plotting
+- **Euclidean Geometry**: Supplementary/alternate angles; inscribed angle theorem with diagrams
+
+#### Grade 12 (6 handlers)
+- **Calculus: Differentiation**: Power rule applied step-by-step; slope at specific points
+- **Calculus: Integration**: Reverse process with each term; constant of integration explained
+- **Trigonometric Identities**: Pythagorean identity (sin²θ + cos²θ = 1); double angle formula
+- **Analytic Geometry**: Circle equation derivation; standard form; point-on-circle tests
+
+### Pedagogical Workflow
+
+Each handler follows: STEP 0 (setup) → STEP 1–3 (calculations) → Verification → 📚 Teacher Notes → 📝 Quizzes
+
+### Technical Improvements
+
+- Two-column layout: LaTeX on left, explanation on right
+- Graphics: Matplotlib unit circles, angle diagrams, function graphs
+- All imports: NumPy and Matplotlib added to topic modules
+- Code reuse: Statistics/Finance delegated in Grade 12
+- Validation: All modules pass Pylance (0 errors)
 
