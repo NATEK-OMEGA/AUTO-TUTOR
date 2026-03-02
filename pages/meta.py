@@ -4,7 +4,7 @@ Helps with OpenGraph when sharing Streamlit links
 """
 import streamlit as st
 
-st.set_page_config(page_title="Quadratic Sequence Tutor", page_icon="Autotutor.png")
+st.set_page_config(page_title="Math Tutor", page_icon="Autotutor.png")
 
 st.markdown("""
 # Share this app!
@@ -12,9 +12,9 @@ st.markdown("""
 ## Social Media Preview
 
 When you share this link on social media, it shows:
-- **Title:** Quadratic Sequence Tutor | CAPS Grade 11
-- **Description:** Interactive math tutor for learning quadratic sequences
-- **Icon:** 📐
+- **Title:** Math Tutor | CAPS
+- **Description:** Interactive math tutor for learning Math
+- **Icon:** "Autotutor.png"
 
 ## Copy your share link:
 """)
