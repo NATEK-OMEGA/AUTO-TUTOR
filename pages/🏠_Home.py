@@ -7,7 +7,7 @@ st.set_page_config(
 )
 
 st.markdown("""
-# 📐 AUTO-Tutor
+# <link rel="icon" href="Autotutor.png"> AUTO-Tutor
 
 ### CAPS Grade 10–12 Mathematics
 
